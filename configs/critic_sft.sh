@@ -5,6 +5,9 @@
 # Prerequisite: run nla.scripts.prepare_critic_checkpoint first to produce
 # CRITIC_INIT_CKPT — a truncated-K-layer checkpoint with config.json +
 # nla_meta.yaml. from_pretrained then loads K layers naturally (no arg needed).
+#
+# Defaults match the Qwen2.5-7B run that produced the released checkpoints
+# (see TRAINING_NOTES.md "Critic SL"): batch 256, lr 2e-5 cosine→2e-6, warmup 50.
 
 : "${AR_SFT_PARQUET:?set AR_SFT_PARQUET to the Stage 3b parquet path}"
 : "${CRITIC_INIT_CKPT:?set CRITIC_INIT_CKPT to prepare_critic_checkpoint.py output dir}"
@@ -26,10 +29,10 @@ ${PYTHON:-python} train.py \
     --save "$SAVE_DIR" \
     --actor-num-nodes 1 \
     --actor-num-gpus-per-node 8 \
-    --rollout-batch-size 64 \
-    --global-batch-size 64 \
+    --rollout-batch-size 256 \
+    --global-batch-size 256 \
     --micro-batch-size 8 \
-    --lr 1e-4 --lr-decay-style constant \
+    --lr 2e-5 --min-lr 2e-6 --lr-warmup-iters 50 --lr-decay-style cosine \
     --n-samples-per-prompt 1 \
     --num-epoch "${NUM_EPOCH:-1}" \
     --save-interval "${SAVE_INTERVAL:-500}" \

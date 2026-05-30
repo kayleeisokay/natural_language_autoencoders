@@ -1,6 +1,9 @@
 #!/bin/bash
 # Actor SFT — teach the actor to explain an injected activation.
 # Debug signal: if injection breaks, actor outputs Chinese (literal ㊗ in context).
+#
+# Defaults match the Qwen2.5-7B run that produced the released checkpoints
+# (see TRAINING_NOTES.md "Actor SFT"): batch 256, lr 2e-5 cosine→2e-6, warmup 50.
 
 : "${AV_SFT_PARQUET:?set AV_SFT_PARQUET to the Stage 3a parquet path}"
 INSTRUCT_MODEL="${INSTRUCT_MODEL:-${BASE_MODEL:-}}"
@@ -22,10 +25,10 @@ ${PYTHON:-python} train.py \
     --save "$SAVE_DIR" \
     --actor-num-nodes 1 \
     --actor-num-gpus-per-node 8 \
-    --rollout-batch-size 32 \
-    --global-batch-size 32 \
+    --rollout-batch-size 256 \
+    --global-batch-size 256 \
     --micro-batch-size 4 \
-    --lr 5e-5 --lr-decay-style constant \
+    --lr 2e-5 --min-lr 2e-6 --lr-warmup-iters 50 --lr-decay-style cosine \
     --n-samples-per-prompt 1 \
     --loss-mask-type "${LOSS_MASK_TYPE:-qwen}" \
     --nla-injection-scale "$INJ_SCALE" \
