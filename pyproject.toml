@@ -20,6 +20,7 @@ dependencies = [
     "pyarrow",
     "datasets",
     "anthropic",
+    "ipywidgets>=8.1.8",
 ]
 # NOT pip-installable here — install separately per docs/setup.md:
 #   miles    : git clone radixark/miles, build_conda.sh, then git apply nla/miles_patches/*.patch
@@ -37,3 +38,8 @@ nla = ["miles_patches/*", "datagen/*.yaml"]
 
 [tool.ruff]
 line-length = 119
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+]
