@@ -11,7 +11,7 @@ requires-python = ">=3.10"
 license = {file = "LICENSE"}
 dependencies = [
     "torch",
-    "transformers",
+    "transformers==4.57.1",
     "safetensors",
     "httpx",
     "orjson",
@@ -21,6 +21,8 @@ dependencies = [
     "datasets",
     "anthropic",
     "ipywidgets>=8.1.8",
+    "ipykernel>=7.3.0",
+    "matplotlib>=3.10.9",
 ]
 # NOT pip-installable here — install separately per docs/setup.md:
 #   miles    : git clone radixark/miles, build_conda.sh, then git apply nla/miles_patches/*.patch
@@ -43,3 +45,12 @@ line-length = 119
 dev = [
     "ipykernel>=7.3.0",
 ]
+
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu124" }
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
