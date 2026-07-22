@@ -1,0 +1,590 @@
+[
+  {
+    "input": "apple",
+    "output": "Apple"
+  },
+  {
+    "input": "river",
+    "output": "River"
+  },
+  {
+    "input": "mountain",
+    "output": "Mountain"
+  },
+  {
+    "input": "garden",
+    "output": "Garden"
+  },
+  {
+    "input": "window",
+    "output": "Window"
+  },
+  {
+    "input": "pencil",
+    "output": "Pencil"
+  },
+  {
+    "input": "hammer",
+    "output": "Hammer"
+  },
+  {
+    "input": "forest",
+    "output": "Forest"
+  },
+  {
+    "input": "ocean",
+    "output": "Ocean"
+  },
+  {
+    "input": "candle",
+    "output": "Candle"
+  },
+  {
+    "input": "bicycle",
+    "output": "Bicycle"
+  },
+  {
+    "input": "kitchen",
+    "output": "Kitchen"
+  },
+  {
+    "input": "blanket",
+    "output": "Blanket"
+  },
+  {
+    "input": "spider",
+    "output": "Spider"
+  },
+  {
+    "input": "turtle",
+    "output": "Turtle"
+  },
+  {
+    "input": "engine",
+    "output": "Engine"
+  },
+  {
+    "input": "pillow",
+    "output": "Pillow"
+  },
+  {
+    "input": "carpet",
+    "output": "Carpet"
+  },
+  {
+    "input": "bottle",
+    "output": "Bottle"
+  },
+  {
+    "input": "ladder",
+    "output": "Ladder"
+  },
+  {
+    "input": "planet",
+    "output": "Planet"
+  },
+  {
+    "input": "desert",
+    "output": "Desert"
+  },
+  {
+    "input": "island",
+    "output": "Island"
+  },
+  {
+    "input": "valley",
+    "output": "Valley"
+  },
+  {
+    "input": "meadow",
+    "output": "Meadow"
+  },
+  {
+    "input": "tunnel",
+    "output": "Tunnel"
+  },
+  {
+    "input": "bridge",
+    "output": "Bridge"
+  },
+  {
+    "input": "castle",
+    "output": "Castle"
+  },
+  {
+    "input": "statue",
+    "output": "Statue"
+  },
+  {
+    "input": "museum",
+    "output": "Museum"
+  },
+  {
+    "input": "orchard",
+    "output": "Orchard"
+  },
+  {
+    "input": "harbor",
+    "output": "Harbor"
+  },
+  {
+    "input": "volcano",
+    "output": "Volcano"
+  },
+  {
+    "input": "glacier",
+    "output": "Glacier"
+  },
+  {
+    "input": "canyon",
+    "output": "Canyon"
+  },
+  {
+    "input": "prairie",
+    "output": "Prairie"
+  },
+  {
+    "input": "jungle",
+    "output": "Jungle"
+  },
+  {
+    "input": "lagoon",
+    "output": "Lagoon"
+  },
+  {
+    "input": "plateau",
+    "output": "Plateau"
+  },
+  {
+    "input": "summit",
+    "output": "Summit"
+  },
+  {
+    "input": "whisper",
+    "output": "Whisper"
+  },
+  {
+    "input": "thunder",
+    "output": "Thunder"
+  },
+  {
+    "input": "lantern",
+    "output": "Lantern"
+  },
+  {
+    "input": "compass",
+    "output": "Compass"
+  },
+  {
+    "input": "anchor",
+    "output": "Anchor"
+  },
+  {
+    "input": "feather",
+    "output": "Feather"
+  },
+  {
+    "input": "blossom",
+    "output": "Blossom"
+  },
+  {
+    "input": "pebble",
+    "output": "Pebble"
+  },
+  {
+    "input": "boulder",
+    "output": "Boulder"
+  },
+  {
+    "input": "current",
+    "output": "Current"
+  },
+  {
+    "input": "teacher",
+    "output": "Teacher"
+  },
+  {
+    "input": "student",
+    "output": "Student"
+  },
+  {
+    "input": "doctor",
+    "output": "Doctor"
+  },
+  {
+    "input": "farmer",
+    "output": "Farmer"
+  },
+  {
+    "input": "painter",
+    "output": "Painter"
+  },
+  {
+    "input": "dancer",
+    "output": "Dancer"
+  },
+  {
+    "input": "singer",
+    "output": "Singer"
+  },
+  {
+    "input": "writer",
+    "output": "Writer"
+  },
+  {
+    "input": "pilot",
+    "output": "Pilot"
+  },
+  {
+    "input": "sailor",
+    "output": "Sailor"
+  },
+  {
+    "input": "chicken",
+    "output": "Chicken"
+  },
+  {
+    "input": "rabbit",
+    "output": "Rabbit"
+  },
+  {
+    "input": "dolphin",
+    "output": "Dolphin"
+  },
+  {
+    "input": "penguin",
+    "output": "Penguin"
+  },
+  {
+    "input": "giraffe",
+    "output": "Giraffe"
+  },
+  {
+    "input": "leopard",
+    "output": "Leopard"
+  },
+  {
+    "input": "squirrel",
+    "output": "Squirrel"
+  },
+  {
+    "input": "hedgehog",
+    "output": "Hedgehog"
+  },
+  {
+    "input": "otter",
+    "output": "Otter"
+  },
+  {
+    "input": "falcon",
+    "output": "Falcon"
+  },
+  {
+    "input": "hallway",
+    "output": "Hallway"
+  },
+  {
+    "input": "balcony",
+    "output": "Balcony"
+  },
+  {
+    "input": "fireplace",
+    "output": "Fireplace"
+  },
+  {
+    "input": "staircase",
+    "output": "Staircase"
+  },
+  {
+    "input": "attic",
+    "output": "Attic"
+  },
+  {
+    "input": "basement",
+    "output": "Basement"
+  },
+  {
+    "input": "chimney",
+    "output": "Chimney"
+  },
+  {
+    "input": "doorway",
+    "output": "Doorway"
+  },
+  {
+    "input": "rooftop",
+    "output": "Rooftop"
+  },
+  {
+    "input": "morning",
+    "output": "Morning"
+  },
+  {
+    "input": "evening",
+    "output": "Evening"
+  },
+  {
+    "input": "sunrise",
+    "output": "Sunrise"
+  },
+  {
+    "input": "sunset",
+    "output": "Sunset"
+  },
+  {
+    "input": "midnight",
+    "output": "Midnight"
+  },
+  {
+    "input": "autumn",
+    "output": "Autumn"
+  },
+  {
+    "input": "winter",
+    "output": "Winter"
+  },
+  {
+    "input": "summer",
+    "output": "Summer"
+  },
+  {
+    "input": "spring",
+    "output": "Spring"
+  },
+  {
+    "input": "season",
+    "output": "Season"
+  },
+  {
+    "input": "diamond",
+    "output": "Diamond"
+  },
+  {
+    "input": "emerald",
+    "output": "Emerald"
+  },
+  {
+    "input": "sapphire",
+    "output": "Sapphire"
+  },
+  {
+    "input": "crystal",
+    "output": "Crystal"
+  },
+  {
+    "input": "granite",
+    "output": "Granite"
+  },
+  {
+    "input": "marble",
+    "output": "Marble"
+  },
+  {
+    "input": "copper",
+    "output": "Copper"
+  },
+  {
+    "input": "silver",
+    "output": "Silver"
+  },
+  {
+    "input": "bronze",
+    "output": "Bronze"
+  },
+  {
+    "input": "platinum",
+    "output": "Platinum"
+  },
+  {
+    "input": "trumpet",
+    "output": "Trumpet"
+  },
+  {
+    "input": "violin",
+    "output": "Violin"
+  },
+  {
+    "input": "clarinet",
+    "output": "Clarinet"
+  },
+  {
+    "input": "cymbal",
+    "output": "Cymbal"
+  },
+  {
+    "input": "drum",
+    "output": "Drum"
+  },
+  {
+    "input": "harp",
+    "output": "Harp"
+  },
+  {
+    "input": "flute",
+    "output": "Flute"
+  },
+  {
+    "input": "piano",
+    "output": "Piano"
+  },
+  {
+    "input": "guitar",
+    "output": "Guitar"
+  },
+  {
+    "input": "banjo",
+    "output": "Banjo"
+  },
+  {
+    "input": "cabbage",
+    "output": "Cabbage"
+  },
+  {
+    "input": "carrot",
+    "output": "Carrot"
+  },
+  {
+    "input": "pumpkin",
+    "output": "Pumpkin"
+  },
+  {
+    "input": "spinach",
+    "output": "Spinach"
+  },
+  {
+    "input": "broccoli",
+    "output": "Broccoli"
+  },
+  {
+    "input": "cucumber",
+    "output": "Cucumber"
+  },
+  {
+    "input": "radish",
+    "output": "Radish"
+  },
+  {
+    "input": "turnip",
+    "output": "Turnip"
+  },
+  {
+    "input": "lettuce",
+    "output": "Lettuce"
+  },
+  {
+    "input": "potato",
+    "output": "Potato"
+  },
+  {
+    "input": "cushion",
+    "output": "Cushion"
+  },
+  {
+    "input": "curtain",
+    "output": "Curtain"
+  },
+  {
+    "input": "mirror",
+    "output": "Mirror"
+  },
+  {
+    "input": "cabinet",
+    "output": "Cabinet"
+  },
+  {
+    "input": "drawer",
+    "output": "Drawer"
+  },
+  {
+    "input": "shelf",
+    "output": "Shelf"
+  },
+  {
+    "input": "mattress",
+    "output": "Mattress"
+  },
+  {
+    "input": "rug",
+    "output": "Rug"
+  },
+  {
+    "input": "vase",
+    "output": "Vase"
+  },
+  {
+    "input": "airport",
+    "output": "Airport"
+  },
+  {
+    "input": "station",
+    "output": "Station"
+  },
+  {
+    "input": "market",
+    "output": "Market"
+  },
+  {
+    "input": "library",
+    "output": "Library"
+  },
+  {
+    "input": "hospital",
+    "output": "Hospital"
+  },
+  {
+    "input": "factory",
+    "output": "Factory"
+  },
+  {
+    "input": "stadium",
+    "output": "Stadium"
+  },
+  {
+    "input": "theater",
+    "output": "Theater"
+  },
+  {
+    "input": "academy",
+    "output": "Academy"
+  },
+  {
+    "input": "journey",
+    "output": "Journey"
+  },
+  {
+    "input": "voyage",
+    "output": "Voyage"
+  },
+  {
+    "input": "adventure",
+    "output": "Adventure"
+  },
+  {
+    "input": "expedition",
+    "output": "Expedition"
+  },
+  {
+    "input": "pilgrimage",
+    "output": "Pilgrimage"
+  },
+  {
+    "input": "migration",
+    "output": "Migration"
+  },
+  {
+    "input": "excursion",
+    "output": "Excursion"
+  },
+  {
+    "input": "odyssey",
+    "output": "Odyssey"
+  },
+  {
+    "input": "quest",
+    "output": "Quest"
+  },
+  {
+    "input": "trek",
+    "output": "Trek"
+  }
+]

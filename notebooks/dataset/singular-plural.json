@@ -1,0 +1,486 @@
+[
+  {
+    "input": "child",
+    "output": "children"
+  },
+  {
+    "input": "man",
+    "output": "men"
+  },
+  {
+    "input": "woman",
+    "output": "women"
+  },
+  {
+    "input": "person",
+    "output": "people"
+  },
+  {
+    "input": "mouse",
+    "output": "mice"
+  },
+  {
+    "input": "goose",
+    "output": "geese"
+  },
+  {
+    "input": "foot",
+    "output": "feet"
+  },
+  {
+    "input": "tooth",
+    "output": "teeth"
+  },
+  {
+    "input": "ox",
+    "output": "oxen"
+  },
+  {
+    "input": "die",
+    "output": "dice"
+  },
+  {
+    "input": "louse",
+    "output": "lice"
+  },
+  {
+    "input": "cactus",
+    "output": "cacti"
+  },
+  {
+    "input": "focus",
+    "output": "foci"
+  },
+  {
+    "input": "fungus",
+    "output": "fungi"
+  },
+  {
+    "input": "nucleus",
+    "output": "nuclei"
+  },
+  {
+    "input": "syllabus",
+    "output": "syllabi"
+  },
+  {
+    "input": "analysis",
+    "output": "analyses"
+  },
+  {
+    "input": "diagnosis",
+    "output": "diagnoses"
+  },
+  {
+    "input": "thesis",
+    "output": "theses"
+  },
+  {
+    "input": "crisis",
+    "output": "crises"
+  },
+  {
+    "input": "phenomenon",
+    "output": "phenomena"
+  },
+  {
+    "input": "criterion",
+    "output": "criteria"
+  },
+  {
+    "input": "datum",
+    "output": "data"
+  },
+  {
+    "input": "curriculum",
+    "output": "curricula"
+  },
+  {
+    "input": "bacterium",
+    "output": "bacteria"
+  },
+  {
+    "input": "medium",
+    "output": "media"
+  },
+  {
+    "input": "index",
+    "output": "indices"
+  },
+  {
+    "input": "matrix",
+    "output": "matrices"
+  },
+  {
+    "input": "vertex",
+    "output": "vertices"
+  },
+  {
+    "input": "axis",
+    "output": "axes"
+  },
+  {
+    "input": "leaf",
+    "output": "leaves"
+  },
+  {
+    "input": "loaf",
+    "output": "loaves"
+  },
+  {
+    "input": "knife",
+    "output": "knives"
+  },
+  {
+    "input": "wife",
+    "output": "wives"
+  },
+  {
+    "input": "life",
+    "output": "lives"
+  },
+  {
+    "input": "wolf",
+    "output": "wolves"
+  },
+  {
+    "input": "calf",
+    "output": "calves"
+  },
+  {
+    "input": "half",
+    "output": "halves"
+  },
+  {
+    "input": "shelf",
+    "output": "shelves"
+  },
+  {
+    "input": "elf",
+    "output": "elves"
+  },
+  {
+    "input": "scarf",
+    "output": "scarves"
+  },
+  {
+    "input": "self",
+    "output": "selves"
+  },
+  {
+    "input": "thief",
+    "output": "thieves"
+  },
+  {
+    "input": "sheep",
+    "output": "sheep"
+  },
+  {
+    "input": "deer",
+    "output": "deer"
+  },
+  {
+    "input": "fish",
+    "output": "fish"
+  },
+  {
+    "input": "series",
+    "output": "series"
+  },
+  {
+    "input": "species",
+    "output": "species"
+  },
+  {
+    "input": "moose",
+    "output": "moose"
+  },
+  {
+    "input": "salmon",
+    "output": "salmon"
+  },
+  {
+    "input": "aircraft",
+    "output": "aircraft"
+  },
+  {
+    "input": "trout",
+    "output": "trout"
+  },
+  {
+    "input": "cat",
+    "output": "cats"
+  },
+  {
+    "input": "dog",
+    "output": "dogs"
+  },
+  {
+    "input": "book",
+    "output": "books"
+  },
+  {
+    "input": "table",
+    "output": "tables"
+  },
+  {
+    "input": "chair",
+    "output": "chairs"
+  },
+  {
+    "input": "house",
+    "output": "houses"
+  },
+  {
+    "input": "car",
+    "output": "cars"
+  },
+  {
+    "input": "tree",
+    "output": "trees"
+  },
+  {
+    "input": "flower",
+    "output": "flowers"
+  },
+  {
+    "input": "bird",
+    "output": "birds"
+  },
+  {
+    "input": "phone",
+    "output": "phones"
+  },
+  {
+    "input": "computer",
+    "output": "computers"
+  },
+  {
+    "input": "desk",
+    "output": "desks"
+  },
+  {
+    "input": "door",
+    "output": "doors"
+  },
+  {
+    "input": "window",
+    "output": "windows"
+  },
+  {
+    "input": "road",
+    "output": "roads"
+  },
+  {
+    "input": "street",
+    "output": "streets"
+  },
+  {
+    "input": "city",
+    "output": "cities"
+  },
+  {
+    "input": "town",
+    "output": "towns"
+  },
+  {
+    "input": "village",
+    "output": "villages"
+  },
+  {
+    "input": "bottle",
+    "output": "bottles"
+  },
+  {
+    "input": "cup",
+    "output": "cups"
+  },
+  {
+    "input": "plate",
+    "output": "plates"
+  },
+  {
+    "input": "spoon",
+    "output": "spoons"
+  },
+  {
+    "input": "fork",
+    "output": "forks"
+  },
+  {
+    "input": "apple",
+    "output": "apples"
+  },
+  {
+    "input": "banana",
+    "output": "bananas"
+  },
+  {
+    "input": "orange",
+    "output": "oranges"
+  },
+  {
+    "input": "grape",
+    "output": "grapes"
+  },
+  {
+    "input": "melon",
+    "output": "melons"
+  },
+  {
+    "input": "box",
+    "output": "boxes"
+  },
+  {
+    "input": "fox",
+    "output": "foxes"
+  },
+  {
+    "input": "bus",
+    "output": "buses"
+  },
+  {
+    "input": "glass",
+    "output": "glasses"
+  },
+  {
+    "input": "dish",
+    "output": "dishes"
+  },
+  {
+    "input": "brush",
+    "output": "brushes"
+  },
+  {
+    "input": "match",
+    "output": "matches"
+  },
+  {
+    "input": "watch",
+    "output": "watches"
+  },
+  {
+    "input": "class",
+    "output": "classes"
+  },
+  {
+    "input": "dress",
+    "output": "dresses"
+  },
+  {
+    "input": "church",
+    "output": "churches"
+  },
+  {
+    "input": "beach",
+    "output": "beaches"
+  },
+  {
+    "input": "peach",
+    "output": "peaches"
+  },
+  {
+    "input": "witch",
+    "output": "witches"
+  },
+  {
+    "input": "torch",
+    "output": "torches"
+  },
+  {
+    "input": "porch",
+    "output": "porches"
+  },
+  {
+    "input": "branch",
+    "output": "branches"
+  },
+  {
+    "input": "bench",
+    "output": "benches"
+  },
+  {
+    "input": "wrench",
+    "output": "wrenches"
+  },
+  {
+    "input": "trench",
+    "output": "trenches"
+  },
+  {
+    "input": "baby",
+    "output": "babies"
+  },
+  {
+    "input": "lady",
+    "output": "ladies"
+  },
+  {
+    "input": "story",
+    "output": "stories"
+  },
+  {
+    "input": "party",
+    "output": "parties"
+  },
+  {
+    "input": "family",
+    "output": "families"
+  },
+  {
+    "input": "country",
+    "output": "countries"
+  },
+  {
+    "input": "puppy",
+    "output": "puppies"
+  },
+  {
+    "input": "candy",
+    "output": "candies"
+  },
+  {
+    "input": "berry",
+    "output": "berries"
+  },
+  {
+    "input": "penny",
+    "output": "pennies"
+  },
+  {
+    "input": "company",
+    "output": "companies"
+  },
+  {
+    "input": "factory",
+    "output": "factories"
+  },
+  {
+    "input": "memory",
+    "output": "memories"
+  },
+  {
+    "input": "library",
+    "output": "libraries"
+  },
+  {
+    "input": "battery",
+    "output": "batteries"
+  },
+  {
+    "input": "gallery",
+    "output": "galleries"
+  },
+  {
+    "input": "century",
+    "output": "centuries"
+  },
+  {
+    "input": "army",
+    "output": "armies"
+  },
+  {
+    "input": "navy",
+    "output": "navies"
+  }
+]

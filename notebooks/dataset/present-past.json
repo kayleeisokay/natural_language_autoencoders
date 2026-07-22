@@ -1,0 +1,826 @@
+[
+  {
+    "input": "go",
+    "output": "went"
+  },
+  {
+    "input": "run",
+    "output": "ran"
+  },
+  {
+    "input": "eat",
+    "output": "ate"
+  },
+  {
+    "input": "see",
+    "output": "saw"
+  },
+  {
+    "input": "take",
+    "output": "took"
+  },
+  {
+    "input": "give",
+    "output": "gave"
+  },
+  {
+    "input": "know",
+    "output": "knew"
+  },
+  {
+    "input": "come",
+    "output": "came"
+  },
+  {
+    "input": "think",
+    "output": "thought"
+  },
+  {
+    "input": "bring",
+    "output": "brought"
+  },
+  {
+    "input": "buy",
+    "output": "bought"
+  },
+  {
+    "input": "catch",
+    "output": "caught"
+  },
+  {
+    "input": "teach",
+    "output": "teached"
+  },
+  {
+    "input": "fight",
+    "output": "fought"
+  },
+  {
+    "input": "seek",
+    "output": "sought"
+  },
+  {
+    "input": "find",
+    "output": "found"
+  },
+  {
+    "input": "bind",
+    "output": "bound"
+  },
+  {
+    "input": "grind",
+    "output": "ground"
+  },
+  {
+    "input": "wind",
+    "output": "wound"
+  },
+  {
+    "input": "hold",
+    "output": "held"
+  },
+  {
+    "input": "fall",
+    "output": "fell"
+  },
+  {
+    "input": "tell",
+    "output": "told"
+  },
+  {
+    "input": "sell",
+    "output": "sold"
+  },
+  {
+    "input": "feel",
+    "output": "felt"
+  },
+  {
+    "input": "keep",
+    "output": "kept"
+  },
+  {
+    "input": "sleep",
+    "output": "slept"
+  },
+  {
+    "input": "sweep",
+    "output": "swept"
+  },
+  {
+    "input": "weep",
+    "output": "wept"
+  },
+  {
+    "input": "creep",
+    "output": "crept"
+  },
+  {
+    "input": "leave",
+    "output": "left"
+  },
+  {
+    "input": "lose",
+    "output": "lost"
+  },
+  {
+    "input": "meet",
+    "output": "met"
+  },
+  {
+    "input": "feed",
+    "output": "fed"
+  },
+  {
+    "input": "lead",
+    "output": "led"
+  },
+  {
+    "input": "read",
+    "output": "read"
+  },
+  {
+    "input": "speak",
+    "output": "spoke"
+  },
+  {
+    "input": "break",
+    "output": "broke"
+  },
+  {
+    "input": "wake",
+    "output": "woke"
+  },
+  {
+    "input": "choose",
+    "output": "chose"
+  },
+  {
+    "input": "freeze",
+    "output": "froze"
+  },
+  {
+    "input": "steal",
+    "output": "stole"
+  },
+  {
+    "input": "weave",
+    "output": "wove"
+  },
+  {
+    "input": "swear",
+    "output": "swore"
+  },
+  {
+    "input": "wear",
+    "output": "wore"
+  },
+  {
+    "input": "tear",
+    "output": "tore"
+  },
+  {
+    "input": "bear",
+    "output": "bore"
+  },
+  {
+    "input": "drive",
+    "output": "drove"
+  },
+  {
+    "input": "ride",
+    "output": "rode"
+  },
+  {
+    "input": "rise",
+    "output": "rose"
+  },
+  {
+    "input": "write",
+    "output": "wrote"
+  },
+  {
+    "input": "bite",
+    "output": "bit"
+  },
+  {
+    "input": "hide",
+    "output": "hid"
+  },
+  {
+    "input": "slide",
+    "output": "slid"
+  },
+  {
+    "input": "shine",
+    "output": "shone"
+  },
+  {
+    "input": "strike",
+    "output": "struck"
+  },
+  {
+    "input": "swim",
+    "output": "swam"
+  },
+  {
+    "input": "begin",
+    "output": "began"
+  },
+  {
+    "input": "drink",
+    "output": "drank"
+  },
+  {
+    "input": "sing",
+    "output": "sang"
+  },
+  {
+    "input": "sink",
+    "output": "sank"
+  },
+  {
+    "input": "ring",
+    "output": "rang"
+  },
+  {
+    "input": "spring",
+    "output": "sprang"
+  },
+  {
+    "input": "shrink",
+    "output": "shrank"
+  },
+  {
+    "input": "stink",
+    "output": "stank"
+  },
+  {
+    "input": "swing",
+    "output": "swung"
+  },
+  {
+    "input": "sting",
+    "output": "stung"
+  },
+  {
+    "input": "cling",
+    "output": "clung"
+  },
+  {
+    "input": "fling",
+    "output": "flung"
+  },
+  {
+    "input": "hang",
+    "output": "hung"
+  },
+  {
+    "input": "dig",
+    "output": "dug"
+  },
+  {
+    "input": "stick",
+    "output": "stuck"
+  },
+  {
+    "input": "win",
+    "output": "won"
+  },
+  {
+    "input": "spin",
+    "output": "spun"
+  },
+  {
+    "input": "stand",
+    "output": "stood"
+  },
+  {
+    "input": "understand",
+    "output": "understood"
+  },
+  {
+    "input": "sit",
+    "output": "sat"
+  },
+  {
+    "input": "spit",
+    "output": "spat"
+  },
+  {
+    "input": "shoot",
+    "output": "shot"
+  },
+  {
+    "input": "shut",
+    "output": "shut"
+  },
+  {
+    "input": "hit",
+    "output": "hit"
+  },
+  {
+    "input": "cut",
+    "output": "cut"
+  },
+  {
+    "input": "hurt",
+    "output": "hurt"
+  },
+  {
+    "input": "put",
+    "output": "put"
+  },
+  {
+    "input": "cost",
+    "output": "cost"
+  },
+  {
+    "input": "let",
+    "output": "let"
+  },
+  {
+    "input": "set",
+    "output": "set"
+  },
+  {
+    "input": "burst",
+    "output": "burst"
+  },
+  {
+    "input": "cast",
+    "output": "cast"
+  },
+  {
+    "input": "spread",
+    "output": "spread"
+  },
+  {
+    "input": "split",
+    "output": "split"
+  },
+  {
+    "input": "quit",
+    "output": "quit"
+  },
+  {
+    "input": "bet",
+    "output": "bet"
+  },
+  {
+    "input": "fit",
+    "output": "fit"
+  },
+  {
+    "input": "knit",
+    "output": "knit"
+  },
+  {
+    "input": "rid",
+    "output": "rid"
+  },
+  {
+    "input": "build",
+    "output": "builded"
+  },
+  {
+    "input": "send",
+    "output": "sent"
+  },
+  {
+    "input": "spend",
+    "output": "spent"
+  },
+  {
+    "input": "lend",
+    "output": "lent"
+  },
+  {
+    "input": "bend",
+    "output": "bent"
+  },
+  {
+    "input": "blend",
+    "output": "blended"
+  },
+  {
+    "input": "mend",
+    "output": "mended"
+  },
+  {
+    "input": "light",
+    "output": "lit"
+  },
+  {
+    "input": "have",
+    "output": "had"
+  },
+  {
+    "input": "make",
+    "output": "made"
+  },
+  {
+    "input": "say",
+    "output": "said"
+  },
+  {
+    "input": "pay",
+    "output": "paid"
+  },
+  {
+    "input": "lay",
+    "output": "laid"
+  },
+  {
+    "input": "hear",
+    "output": "heard"
+  },
+  {
+    "input": "flee",
+    "output": "fled"
+  },
+  {
+    "input": "grow",
+    "output": "grew"
+  },
+  {
+    "input": "throw",
+    "output": "threw"
+  },
+  {
+    "input": "blow",
+    "output": "blew"
+  },
+  {
+    "input": "fly",
+    "output": "flew"
+  },
+  {
+    "input": "draw",
+    "output": "drew"
+  },
+  {
+    "input": "withdraw",
+    "output": "withdrew"
+  },
+  {
+    "input": "do",
+    "output": "did"
+  },
+  {
+    "input": "shake",
+    "output": "shook"
+  },
+  {
+    "input": "forsake",
+    "output": "forsook"
+  },
+  {
+    "input": "mistake",
+    "output": "mistook"
+  },
+  {
+    "input": "forget",
+    "output": "forgot"
+  },
+  {
+    "input": "get",
+    "output": "got"
+  },
+  {
+    "input": "beget",
+    "output": "begot"
+  },
+  {
+    "input": "become",
+    "output": "became"
+  },
+  {
+    "input": "wring",
+    "output": "wrung"
+  },
+  {
+    "input": "bleed",
+    "output": "bled"
+  },
+  {
+    "input": "breed",
+    "output": "bred"
+  },
+  {
+    "input": "speed",
+    "output": "sped"
+  },
+  {
+    "input": "shed",
+    "output": "shed"
+  },
+  {
+    "input": "arise",
+    "output": "arose"
+  },
+  {
+    "input": "beat",
+    "output": "beat"
+  },
+  {
+    "input": "burn",
+    "output": "burnt"
+  },
+  {
+    "input": "dream",
+    "output": "dreamt"
+  },
+  {
+    "input": "kneel",
+    "output": "knelt"
+  },
+  {
+    "input": "lean",
+    "output": "leant"
+  },
+  {
+    "input": "leap",
+    "output": "leapt"
+  },
+  {
+    "input": "learn",
+    "output": "learned"
+  },
+  {
+    "input": "smell",
+    "output": "smelt"
+  },
+  {
+    "input": "spell",
+    "output": "spelt"
+  },
+  {
+    "input": "spill",
+    "output": "spilt"
+  },
+  {
+    "input": "spoil",
+    "output": "spoilt"
+  },
+  {
+    "input": "walk",
+    "output": "walked"
+  },
+  {
+    "input": "talk",
+    "output": "talked"
+  },
+  {
+    "input": "play",
+    "output": "played"
+  },
+  {
+    "input": "jump",
+    "output": "jumped"
+  },
+  {
+    "input": "climb",
+    "output": "climbed"
+  },
+  {
+    "input": "cook",
+    "output": "cooked"
+  },
+  {
+    "input": "clean",
+    "output": "cleaned"
+  },
+  {
+    "input": "paint",
+    "output": "painted"
+  },
+  {
+    "input": "brush",
+    "output": "brushed"
+  },
+  {
+    "input": "dance",
+    "output": "danced"
+  },
+  {
+    "input": "laugh",
+    "output": "laughed"
+  },
+  {
+    "input": "smile",
+    "output": "smiled"
+  },
+  {
+    "input": "cry",
+    "output": "cryed"
+  },
+  {
+    "input": "shout",
+    "output": "shouted"
+  },
+  {
+    "input": "whisper",
+    "output": "whispered"
+  },
+  {
+    "input": "open",
+    "output": "opened"
+  },
+  {
+    "input": "close",
+    "output": "closed"
+  },
+  {
+    "input": "start",
+    "output": "started"
+  },
+  {
+    "input": "finish",
+    "output": "finished"
+  },
+  {
+    "input": "help",
+    "output": "helped"
+  },
+  {
+    "input": "watch",
+    "output": "watched"
+  },
+  {
+    "input": "listen",
+    "output": "listened"
+  },
+  {
+    "input": "move",
+    "output": "moved"
+  },
+  {
+    "input": "turn",
+    "output": "turned"
+  },
+  {
+    "input": "pull",
+    "output": "pulled"
+  },
+  {
+    "input": "push",
+    "output": "pushed"
+  },
+  {
+    "input": "carry",
+    "output": "carryed"
+  },
+  {
+    "input": "lift",
+    "output": "lifted"
+  },
+  {
+    "input": "drop",
+    "output": "droped"
+  },
+  {
+    "input": "kick",
+    "output": "kicked"
+  },
+  {
+    "input": "pack",
+    "output": "packed"
+  },
+  {
+    "input": "unpack",
+    "output": "unpacked"
+  },
+  {
+    "input": "print",
+    "output": "printed"
+  },
+  {
+    "input": "type",
+    "output": "typed"
+  },
+  {
+    "input": "click",
+    "output": "clicked"
+  },
+  {
+    "input": "scroll",
+    "output": "scrolled"
+  },
+  {
+    "input": "design",
+    "output": "designed"
+  },
+  {
+    "input": "plant",
+    "output": "planted"
+  },
+  {
+    "input": "water",
+    "output": "watered"
+  },
+  {
+    "input": "wash",
+    "output": "washed"
+  },
+  {
+    "input": "dry",
+    "output": "dryed"
+  },
+  {
+    "input": "fold",
+    "output": "folded"
+  },
+  {
+    "input": "iron",
+    "output": "ironed"
+  },
+  {
+    "input": "bake",
+    "output": "baked"
+  },
+  {
+    "input": "boil",
+    "output": "boiled"
+  },
+  {
+    "input": "fry",
+    "output": "fryed"
+  },
+  {
+    "input": "grill",
+    "output": "grilled"
+  },
+  {
+    "input": "roast",
+    "output": "roasted"
+  },
+  {
+    "input": "travel",
+    "output": "traveled"
+  },
+  {
+    "input": "visit",
+    "output": "visited"
+  },
+  {
+    "input": "explore",
+    "output": "explored"
+  },
+  {
+    "input": "hike",
+    "output": "hiked"
+  },
+  {
+    "input": "camp",
+    "output": "camped"
+  },
+  {
+    "input": "fish",
+    "output": "fished"
+  },
+  {
+    "input": "sail",
+    "output": "sailed"
+  },
+  {
+    "input": "row",
+    "output": "rowed"
+  },
+  {
+    "input": "paddle",
+    "output": "paddled"
+  },
+  {
+    "input": "study",
+    "output": "studyed"
+  },
+  {
+    "input": "train",
+    "output": "trained"
+  },
+  {
+    "input": "practice",
+    "output": "practiced"
+  },
+  {
+    "input": "exercise",
+    "output": "exercised"
+  },
+  {
+    "input": "stretch",
+    "output": "stretched"
+  },
+  {
+    "input": "jog",
+    "output": "joged"
+  },
+  {
+    "input": "skate",
+    "output": "skated"
+  },
+  {
+    "input": "surf",
+    "output": "surfed"
+  }
+]

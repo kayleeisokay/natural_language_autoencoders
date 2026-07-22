@@ -1,0 +1,666 @@
+[
+  {
+    "input": "Afghanistan",
+    "output": "Kabul"
+  },
+  {
+    "input": "Albania",
+    "output": "Tirana"
+  },
+  {
+    "input": "Algeria",
+    "output": "Algiers"
+  },
+  {
+    "input": "Angola",
+    "output": "Luanda"
+  },
+  {
+    "input": "Argentina",
+    "output": "Buenos Aires"
+  },
+  {
+    "input": "Armenia",
+    "output": "Yerevan"
+  },
+  {
+    "input": "Australia",
+    "output": "Canberra"
+  },
+  {
+    "input": "Austria",
+    "output": "Vienna"
+  },
+  {
+    "input": "Azerbaijan",
+    "output": "Baku"
+  },
+  {
+    "input": "Bahamas",
+    "output": "Nassau"
+  },
+  {
+    "input": "Bahrain",
+    "output": "Manama"
+  },
+  {
+    "input": "Bangladesh",
+    "output": "Dhaka"
+  },
+  {
+    "input": "Belarus",
+    "output": "Minsk"
+  },
+  {
+    "input": "Belgium",
+    "output": "Brussels"
+  },
+  {
+    "input": "Belize",
+    "output": "Belmopan"
+  },
+  {
+    "input": "Benin",
+    "output": "Porto-Novo"
+  },
+  {
+    "input": "Bhutan",
+    "output": "Thimphu"
+  },
+  {
+    "input": "Bolivia",
+    "output": "Sucre"
+  },
+  {
+    "input": "Botswana",
+    "output": "Gaborone"
+  },
+  {
+    "input": "Brazil",
+    "output": "Brasilia"
+  },
+  {
+    "input": "Bulgaria",
+    "output": "Sofia"
+  },
+  {
+    "input": "Burkina Faso",
+    "output": "Ouagadougou"
+  },
+  {
+    "input": "Cambodia",
+    "output": "Phnom Penh"
+  },
+  {
+    "input": "Cameroon",
+    "output": "Yaounde"
+  },
+  {
+    "input": "Canada",
+    "output": "Ottawa"
+  },
+  {
+    "input": "Chad",
+    "output": "N'Djamena"
+  },
+  {
+    "input": "Chile",
+    "output": "Santiago"
+  },
+  {
+    "input": "China",
+    "output": "Beijing"
+  },
+  {
+    "input": "Colombia",
+    "output": "Bogota"
+  },
+  {
+    "input": "Costa Rica",
+    "output": "San Jose"
+  },
+  {
+    "input": "Croatia",
+    "output": "Zagreb"
+  },
+  {
+    "input": "Cuba",
+    "output": "Havana"
+  },
+  {
+    "input": "Cyprus",
+    "output": "Nicosia"
+  },
+  {
+    "input": "Czechia",
+    "output": "Prague"
+  },
+  {
+    "input": "Denmark",
+    "output": "Copenhagen"
+  },
+  {
+    "input": "Ecuador",
+    "output": "Quito"
+  },
+  {
+    "input": "Egypt",
+    "output": "Cairo"
+  },
+  {
+    "input": "El Salvador",
+    "output": "San Salvador"
+  },
+  {
+    "input": "Estonia",
+    "output": "Tallinn"
+  },
+  {
+    "input": "Ethiopia",
+    "output": "Addis Ababa"
+  },
+  {
+    "input": "Fiji",
+    "output": "Suva"
+  },
+  {
+    "input": "Finland",
+    "output": "Helsinki"
+  },
+  {
+    "input": "France",
+    "output": "Paris"
+  },
+  {
+    "input": "Gabon",
+    "output": "Libreville"
+  },
+  {
+    "input": "Georgia",
+    "output": "Tbilisi"
+  },
+  {
+    "input": "Germany",
+    "output": "Berlin"
+  },
+  {
+    "input": "Ghana",
+    "output": "Accra"
+  },
+  {
+    "input": "Greece",
+    "output": "Athens"
+  },
+  {
+    "input": "Guatemala",
+    "output": "Guatemala City"
+  },
+  {
+    "input": "Guinea",
+    "output": "Conakry"
+  },
+  {
+    "input": "Guyana",
+    "output": "Georgetown"
+  },
+  {
+    "input": "Haiti",
+    "output": "Port-au-Prince"
+  },
+  {
+    "input": "Honduras",
+    "output": "Tegucigalpa"
+  },
+  {
+    "input": "Hungary",
+    "output": "Budapest"
+  },
+  {
+    "input": "Iceland",
+    "output": "Reykjavik"
+  },
+  {
+    "input": "India",
+    "output": "New Delhi"
+  },
+  {
+    "input": "Indonesia",
+    "output": "Jakarta"
+  },
+  {
+    "input": "Iran",
+    "output": "Tehran"
+  },
+  {
+    "input": "Iraq",
+    "output": "Baghdad"
+  },
+  {
+    "input": "Ireland",
+    "output": "Dublin"
+  },
+  {
+    "input": "Israel",
+    "output": "Jerusalem"
+  },
+  {
+    "input": "Italy",
+    "output": "Rome"
+  },
+  {
+    "input": "Jamaica",
+    "output": "Kingston"
+  },
+  {
+    "input": "Japan",
+    "output": "Tokyo"
+  },
+  {
+    "input": "Jordan",
+    "output": "Amman"
+  },
+  {
+    "input": "Kazakhstan",
+    "output": "Astana"
+  },
+  {
+    "input": "Kenya",
+    "output": "Nairobi"
+  },
+  {
+    "input": "Kuwait",
+    "output": "Kuwait City"
+  },
+  {
+    "input": "Kyrgyzstan",
+    "output": "Bishkek"
+  },
+  {
+    "input": "Laos",
+    "output": "Vientiane"
+  },
+  {
+    "input": "Latvia",
+    "output": "Riga"
+  },
+  {
+    "input": "Lebanon",
+    "output": "Beirut"
+  },
+  {
+    "input": "Lesotho",
+    "output": "Maseru"
+  },
+  {
+    "input": "Liberia",
+    "output": "Monrovia"
+  },
+  {
+    "input": "Libya",
+    "output": "Tripoli"
+  },
+  {
+    "input": "Lithuania",
+    "output": "Vilnius"
+  },
+  {
+    "input": "Luxembourg",
+    "output": "Luxembourg City"
+  },
+  {
+    "input": "Madagascar",
+    "output": "Antananarivo"
+  },
+  {
+    "input": "Malawi",
+    "output": "Lilongwe"
+  },
+  {
+    "input": "Malaysia",
+    "output": "Kuala Lumpur"
+  },
+  {
+    "input": "Maldives",
+    "output": "Male"
+  },
+  {
+    "input": "Mali",
+    "output": "Bamako"
+  },
+  {
+    "input": "Malta",
+    "output": "Valletta"
+  },
+  {
+    "input": "Mauritania",
+    "output": "Nouakchott"
+  },
+  {
+    "input": "Mexico",
+    "output": "Mexico City"
+  },
+  {
+    "input": "Moldova",
+    "output": "Chisinau"
+  },
+  {
+    "input": "Monaco",
+    "output": "Monaco"
+  },
+  {
+    "input": "Mongolia",
+    "output": "Ulaanbaatar"
+  },
+  {
+    "input": "Montenegro",
+    "output": "Podgorica"
+  },
+  {
+    "input": "Morocco",
+    "output": "Rabat"
+  },
+  {
+    "input": "Mozambique",
+    "output": "Maputo"
+  },
+  {
+    "input": "Myanmar",
+    "output": "Naypyidaw"
+  },
+  {
+    "input": "Namibia",
+    "output": "Windhoek"
+  },
+  {
+    "input": "Nepal",
+    "output": "Kathmandu"
+  },
+  {
+    "input": "Netherlands",
+    "output": "Amsterdam"
+  },
+  {
+    "input": "New Zealand",
+    "output": "Wellington"
+  },
+  {
+    "input": "Nicaragua",
+    "output": "Managua"
+  },
+  {
+    "input": "Niger",
+    "output": "Niamey"
+  },
+  {
+    "input": "Nigeria",
+    "output": "Abuja"
+  },
+  {
+    "input": "North Korea",
+    "output": "Pyongyang"
+  },
+  {
+    "input": "North Macedonia",
+    "output": "Skopje"
+  },
+  {
+    "input": "Norway",
+    "output": "Oslo"
+  },
+  {
+    "input": "Oman",
+    "output": "Muscat"
+  },
+  {
+    "input": "Pakistan",
+    "output": "Islamabad"
+  },
+  {
+    "input": "Panama",
+    "output": "Panama City"
+  },
+  {
+    "input": "Paraguay",
+    "output": "Asuncion"
+  },
+  {
+    "input": "Peru",
+    "output": "Lima"
+  },
+  {
+    "input": "Philippines",
+    "output": "Manila"
+  },
+  {
+    "input": "Poland",
+    "output": "Warsaw"
+  },
+  {
+    "input": "Portugal",
+    "output": "Lisbon"
+  },
+  {
+    "input": "Qatar",
+    "output": "Doha"
+  },
+  {
+    "input": "Romania",
+    "output": "Bucharest"
+  },
+  {
+    "input": "Russia",
+    "output": "Moscow"
+  },
+  {
+    "input": "Rwanda",
+    "output": "Kigali"
+  },
+  {
+    "input": "Saudi Arabia",
+    "output": "Riyadh"
+  },
+  {
+    "input": "Senegal",
+    "output": "Dakar"
+  },
+  {
+    "input": "Serbia",
+    "output": "Belgrade"
+  },
+  {
+    "input": "Singapore",
+    "output": "Singapore"
+  },
+  {
+    "input": "Slovakia",
+    "output": "Bratislava"
+  },
+  {
+    "input": "Slovenia",
+    "output": "Ljubljana"
+  },
+  {
+    "input": "Somalia",
+    "output": "Mogadishu"
+  },
+  {
+    "input": "South Africa",
+    "output": "Pretoria"
+  },
+  {
+    "input": "South Korea",
+    "output": "Seoul"
+  },
+  {
+    "input": "South Sudan",
+    "output": "Juba"
+  },
+  {
+    "input": "Spain",
+    "output": "Madrid"
+  },
+  {
+    "input": "Sri Lanka",
+    "output": "Colombo"
+  },
+  {
+    "input": "Sudan",
+    "output": "Khartoum"
+  },
+  {
+    "input": "Suriname",
+    "output": "Paramaribo"
+  },
+  {
+    "input": "Sweden",
+    "output": "Stockholm"
+  },
+  {
+    "input": "Switzerland",
+    "output": "Bern"
+  },
+  {
+    "input": "Syria",
+    "output": "Damascus"
+  },
+  {
+    "input": "Taiwan",
+    "output": "Taipei"
+  },
+  {
+    "input": "Tajikistan",
+    "output": "Dushanbe"
+  },
+  {
+    "input": "Tanzania",
+    "output": "Dodoma"
+  },
+  {
+    "input": "Thailand",
+    "output": "Bangkok"
+  },
+  {
+    "input": "Togo",
+    "output": "Lome"
+  },
+  {
+    "input": "Trinidad and Tobago",
+    "output": "Port of Spain"
+  },
+  {
+    "input": "Tunisia",
+    "output": "Tunis"
+  },
+  {
+    "input": "Turkey",
+    "output": "Ankara"
+  },
+  {
+    "input": "Turkmenistan",
+    "output": "Ashgabat"
+  },
+  {
+    "input": "Uganda",
+    "output": "Kampala"
+  },
+  {
+    "input": "Ukraine",
+    "output": "Kyiv"
+  },
+  {
+    "input": "United Arab Emirates",
+    "output": "Abu Dhabi"
+  },
+  {
+    "input": "United Kingdom",
+    "output": "London"
+  },
+  {
+    "input": "United States",
+    "output": "Washington"
+  },
+  {
+    "input": "Uruguay",
+    "output": "Montevideo"
+  },
+  {
+    "input": "Uzbekistan",
+    "output": "Tashkent"
+  },
+  {
+    "input": "Venezuela",
+    "output": "Caracas"
+  },
+  {
+    "input": "Vietnam",
+    "output": "Hanoi"
+  },
+  {
+    "input": "Yemen",
+    "output": "Sanaa"
+  },
+  {
+    "input": "Zambia",
+    "output": "Lusaka"
+  },
+  {
+    "input": "Zimbabwe",
+    "output": "Harare"
+  },
+  {
+    "input": "Andorra",
+    "output": "Andorra la Vella"
+  },
+  {
+    "input": "Liechtenstein",
+    "output": "Vaduz"
+  },
+  {
+    "input": "San Marino",
+    "output": "San Marino"
+  },
+  {
+    "input": "Eswatini",
+    "output": "Mbabane"
+  },
+  {
+    "input": "Djibouti",
+    "output": "Djibouti"
+  },
+  {
+    "input": "Eritrea",
+    "output": "Asmara"
+  },
+  {
+    "input": "Gambia",
+    "output": "Banjul"
+  },
+  {
+    "input": "Guinea-Bissau",
+    "output": "Bissau"
+  },
+  {
+    "input": "Sierra Leone",
+    "output": "Freetown"
+  },
+  {
+    "input": "Comoros",
+    "output": "Moroni"
+  },
+  {
+    "input": "Seychelles",
+    "output": "Victoria"
+  },
+  {
+    "input": "Bosnia and Herzegovina",
+    "output": "Sarajevo"
+  },
+  {
+    "input": "Papua New Guinea",
+    "output": "Port Moresby"
+  },
+  {
+    "input": "Solomon Islands",
+    "output": "Honiara"
+  }
+]
