@@ -1,4 +1,24 @@
+# %%
 from __future__ import annotations
+
+# -----------------------------------------------------------------------------
+# EDIT THESE VALUES FOR YOUR CLUSTER ALLOCATION
+# -----------------------------------------------------------------------------
+# USER_NAME is your Linux username / /home folder name.
+# VISIBLE_GPUS are the physical GPU IDs assigned to you, comma-separated.
+# After CUDA masking, the first listed physical GPU becomes cuda:0 in this notebook.
+# SGLANG_PHYSICAL_GPU is the physical GPU reserved for the SGLang AV server.
+USER_NAME = "kaylee"
+VISIBLE_GPUS = "0,1"
+SGLANG_PHYSICAL_GPU = "1"
+LOCAL_DEVICE = "cuda:0"
+# -----------------------------------------------------------------------------
+
+# Run this notebook from a fresh kernel. CUDA_VISIBLE_DEVICES must be set before
+# importing torch, so this setup cell intentionally defines paths/GPUs first.
+import os
+from pathlib import Path
+
 # %% [markdown]
 # NLA round-trip accuracy degradation experiment.
 # 
@@ -20,9 +40,6 @@ from __future__ import annotations
 # Fill in the two TODOs (load_av_ar, extract_final_answer) for your repo's
 # actual API / answer-parsing format before running.
 
-# %%
-VISIBLE_GPUS = "0,1"
-
 # %% [markdown]
 # ## Experiment Overview
 # 
@@ -31,26 +48,6 @@ VISIBLE_GPUS = "0,1"
 # Results are printed and displayed near the cells that produce them. Round-trip and paraphrasing summaries are also written beneath the configurable experiment output root; introspection and zero-vector results remain notebook-only.
 
 # %%
-
-
-# -----------------------------------------------------------------------------
-# EDIT THESE VALUES FOR YOUR CLUSTER ALLOCATION
-# -----------------------------------------------------------------------------
-# USER_NAME is your Linux username / /home folder name.
-# VISIBLE_GPUS are the physical GPU IDs assigned to you, comma-separated.
-# After CUDA masking, the first listed physical GPU becomes cuda:0 in this notebook.
-# SGLANG_PHYSICAL_GPU is the physical GPU reserved for the SGLang AV server.
-USER_NAME = "kaylee"
-VISIBLE_GPUS = "0,1"
-SGLANG_PHYSICAL_GPU = "1"
-LOCAL_DEVICE = "cuda:0"
-# -----------------------------------------------------------------------------
-
-# Run this notebook from a fresh kernel. CUDA_VISIBLE_DEVICES must be set before
-# importing torch, so this setup cell intentionally defines paths/GPUs first.
-import os
-from pathlib import Path
-
 HOME = Path("/home") / USER_NAME
 NLA_REPO = Path(os.environ.get("NLA_REPO", HOME / "natural_language_autoencoders"))
 SGLANG_REPO = Path(os.environ.get("SGLANG_REPO", HOME / "sglang"))
@@ -317,9 +314,8 @@ print("Target and AV client ready")
 # $$
 
 # %%
-import inspect
-print(inspect.getsourcefile(client.generate))
-print(inspect.getsource(client.generate))
+import math
+from nla.schema import normalize_activation
 
 # %%
 # N_SANITY = 200
@@ -356,23 +352,23 @@ PARAPHRASE_PROMPT = (
 
 import re 
 
-def paraphrase(text: str, max_new_tokens: int = 512) -> str:
-    prompt = PARAPHRASE_PROMPT.format(text=text)
-    inputs = tokenizer(prompt, return_tensors="pt").to(DEVICE)
-    with torch.no_grad():
-        out = model.generate(
-            **inputs,
-            max_new_tokens=max_new_tokens,
-            do_sample=False,
-        )
-    raw = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+# def paraphrase(text: str, max_new_tokens: int = 512) -> str:
+#     prompt = PARAPHRASE_PROMPT.format(text=text)
+#     inputs = tokenizer(prompt, return_tensors="pt").to(DEVICE)
+#     with torch.no_grad():
+#         out = model.generate(
+#             **inputs,
+#             max_new_tokens=max_new_tokens,
+#             do_sample=False,
+#         )
+#     raw = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
 
-    match = re.search(r"<transformed_text>(.*?)</transformed_text>", raw, re.DOTALL)
-    if match:
-        return match.group(1).strip()
-    else:
-        print(f"[paraphrase] WARNING: no <transformed_text> tags. Raw[:200]={raw[:200]!r}")
-        return raw
+#     match = re.search(r"<transformed_text>(.*?)</transformed_text>", raw, re.DOTALL)
+#     if match:
+#         return match.group(1).strip()
+#     else:
+#         print(f"[paraphrase] WARNING: no <transformed_text> tags. Raw[:200]={raw[:200]!r}")
+#         return raw
 
 def ar(text: str) -> torch.Tensor:
     return critic.reconstruct(text)  # raw, unnormalized -- matches h's scale
@@ -675,28 +671,34 @@ def run_with_patch(prompt: str, patch_vec, max_new_tokens=256):
 # For each task have a plot for number of shots (X axis) and accuracy (y-axis). 
 
 # %%
+import math
+from nla.schema import normalize_activation
+
+D_MODEL = model.config.text_config.hidden_size
+MSE_SCALE = math.sqrt(D_MODEL)
+
+# %%
 """
 Shot-count sweep version of the NLA round-trip eval on the 6 ICL
 function-vector tasks (Todd et al. 2023, arXiv:2310.15213).
 
 For each task, sweeps the number of ICL demonstrations (x-axis) and
-plots accuracy (y-axis) for two conditions:
-  - nla_roundtrip:        h patched with AR(verbalize(h))
-  - paraphrase_roundtrip: h patched with AR(paraphrase(verbalize(h)))
-
-Also now tracks FVE (fraction of variance explained) for the
-reconstructed activation vs. the actual activation, for both
-conditions, per (task, n_shots) config.
+plots accuracy (y-axis) for four conditions:
+  - baseline:                    no patching at all -- Gemma out of the
+                                 box, plain few-shot ICL, no function
+                                 vector involved
+  - nla_roundtrip:               h patched with AR(verbalize(h))
+  - paraphrase_roundtrip_medium: h patched with AR(paraphrase_medium(verbalize(h)))
+  - paraphrase_roundtrip_heavy:  h patched with AR(paraphrase_heavy(verbalize(h)))
 
 Produces one PNG per task plus a combined 2x3 grid, and caches raw
 results to JSON so you can replot without rerunning the model.
 
-Notebook cells -- paste/import your existing definitions (av,
-paraphrase, ar, run_with_patch, mse_cos_from_reconstruction,
-raw_sq_error, LastTokenPatcher, client, critic, model,
-tokenizer) before running this. (fve / fve_nrm from earlier drafts
-are superseded by compute_fve below -- see the note in its docstring
-if you're keeping the old per-example versions around too.)
+Notebook cells -- paste/import your existing definitions (av, ar,
+run_with_patch, LastTokenPatcher, client, critic, model, tokenizer,
+DEVICE) before running this. `paraphrase()` is now defined below
+(parameterized on prompt_template) rather than imported -- just make
+sure `model`/`tokenizer`/`DEVICE` are already in scope when it runs.
 
 Dataset sources, all expected flat under datasets/:
   - antonym:           Nguyen et al. 2017 (AntSynNET) -- github.com/nguyenkh/AntSynNET
@@ -712,6 +714,7 @@ Dataset sources, all expected flat under datasets/:
 # %%
 import json
 import random
+import re
 import string
 from pathlib import Path
 
@@ -728,17 +731,67 @@ TASKS = [
     "singular-plural",
 ]
 
-# Shot counts to sweep. 0 = zero-shot (no demonstrations, just "Q: <word>\nA:").
-N_SANITY = 200
-SHOT_COUNTS = [0, 2, 4, 6, 8, 10]
+# Shot counts to sweep. (Zero-shot removed -- sweep starts at 2.)
+SHOT_COUNTS = [2, 4, 6, 8, 10]
 N_PER_CONFIG = 50
 MAX_NEW_TOKENS = 256
 SEED = 0
 
 DATA_DIR = Path("datasets")
-OUT_DIR = Path("/mnt/ssd-2/soar-nla/kaylee")
+OUT_DIR = Path("/mnt/ssd-1/soar-nla/kaylee")
 RESULTS_CACHE = OUT_DIR / "fv_shot_sweep_results.json"
 CASE_SENSITIVE_TASKS = {"capitalize"}
+
+# Two paraphrase intensities. PARAPHRASE_PROMPT_MEDIUM should be set to
+# whatever your original PARAPHRASE_PROMPT already was (the one
+# paraphrase() used to read as a hardcoded global). Fill in
+# PARAPHRASE_PROMPT_HEAVY with your stronger-rewrite prompt. Both must
+# contain a `{text}` format placeholder, same as the original.
+PARAPHRASE_PROMPT_MEDIUM = (
+    "Please paraphrase the text provided below, preserving its exact meaning "
+    "but expressing it in substantially different words and sentence structure "
+    "than the original. Do not simply swap individual words for synonyms -- "
+    "restructure the sentence(s) genuinely.\n\n"
+    "<text>\n{text}\n</text>\n\n"
+    "Include your final paraphrased text in <transformed_text> tags."
+)
+PARAPHRASE_PROMPT_HEAVY = (
+    "Please paraphrase aggressively. Preserve meaning and uncertainty, but "
+    "substantially change wording, syntax, and organization. Do not simply swap individual words for synonyms -- "
+    "restructure the sentence(s) genuinely.\n\n"
+    "Text:\n{text}\n\n"
+    "Respond with only the paraphrased text, wrapped exactly like this:\n"
+    "<transformed_text>your paraphrase here</transformed_text>"
+)
+
+
+# %%
+# --------------------------------------------------------------------------
+# Paraphrasing (Gemma-based rewrite of the AV's verbalization)
+# --------------------------------------------------------------------------
+
+def paraphrase(text: str, prompt_template: str = PARAPHRASE_PROMPT_MEDIUM, max_new_tokens: int = 512) -> str:
+    """Rewrites `text` using `prompt_template` (PARAPHRASE_PROMPT_MEDIUM or
+    PARAPHRASE_PROMPT_HEAVY). Was hardcoded to a single global
+    PARAPHRASE_PROMPT -- now takes the template explicitly so medium and
+    heavy paraphrase conditions can share one function.
+    """
+    prompt = prompt_template.format(text=text)
+    inputs = tokenizer(prompt, return_tensors="pt").to(DEVICE)
+    with torch.no_grad():
+        out = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+        )
+    raw = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+
+    match = re.search(r"<transformed_text>(.*?)</transformed_text>", raw, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    else:
+        print(f"[paraphrase] WARNING: no <transformed_text> tags. Raw[:200]={raw[:200]!r}")
+        return raw
 
 
 # %%
@@ -905,54 +958,6 @@ def is_meaningfully_paraphrased(original: str, paraphrased: str, max_overlap: fl
 
 # %%
 # --------------------------------------------------------------------------
-# FVE (fraction of variance explained)
-# --------------------------------------------------------------------------
-
-def compute_fve(actual: list[torch.Tensor], reconstructed: list[torch.Tensor]) -> float:
-    """FVE for a batch of N reconstructed activation vectors against
-    their N actual counterparts, per Pavlos's spec:
-
-        y = actual activation, x = reconstructed activation
-        variance = sum_n sum_d (y_n,d - mean_n(y)_d)^2   <- pooled over ALL N points
-        FVU      = sum_n sum_d (y_n,d - x_n,d)^2
-        FVE      = 1 - FVU / variance
-
-    Both sums run over the full (N, D) batch jointly -- the per-dimension
-    mean in the variance term is the mean *across the N examples in this
-    config*, not each example's own across-dimension mean. That pooling is
-    what makes this a genuine "fraction of variance explained" rather than
-    a per-example reconstruction-error ratio, so call this once per
-    (task, n_shots, condition) config over all N samples, not once per
-    example.
-
-    On normalization: AR's output is raw-scale (it wasn't reparametrized
-    to output normalized activations), and per Pavlos, normalization was
-    only ever applied on the loss side during AR's training -- i.e. the
-    MSE loss AR was optimized against was itself divided by the batch
-    variance, which is exactly the FVU/variance ratio here. So computing
-    FVE directly on raw y/x and letting the `variance` denominator do the
-    normalizing reproduces the same normalized quantity AR was trained
-    against, without introducing a second, inconsistent normalization
-    (e.g. per-vector unit-norm scaling) on top of it. If you later
-    confirm AR's training loss instead normalized each example
-    individually (e.g. divided by ||y_n|| before the MSE, rather than by
-    the batch variance), switch this to normalize each row of Y and X by
-    that same per-example quantity before the sums below -- do it
-    identically to both Y and X, or the ratio stops meaning what it says.
-    """
-    Y = torch.stack([y.detach().float().cpu().reshape(-1) for y in actual])          # (N, D)
-    X = torch.stack([x.detach().float().cpu().reshape(-1) for x in reconstructed])   # (N, D)
-
-    y_mean = Y.mean(dim=0, keepdim=True)                 # (1, D), pooled across N
-    variance = ((Y - y_mean) ** 2).sum().item()
-    fvu = ((Y - X) ** 2).sum().item()
-
-    if variance == 0:
-        return float("nan")
-    return 1.0 - (fvu / variance)
-
-# %%
-# --------------------------------------------------------------------------
 # One (task, n_shots) configuration
 # --------------------------------------------------------------------------
 
@@ -961,25 +966,38 @@ def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Rand
     query_idxs = rng.sample(range(len(pairs)), n)
     case_sensitive = task_name in CASE_SENSITIVE_TASKS
 
+    baseline_correct = 0
     nla_correct = 0
-    para_correct = 0
-    para_overlaps = []
-    para_low_overlap_count = 0
+    para_medium_correct = 0
+    para_heavy_correct = 0
+    para_medium_overlaps = []
+    para_heavy_overlaps = []
+    para_medium_low_overlap_count = 0
+    para_heavy_low_overlap_count = 0
 
-    # Collected for FVE -- one entry per sample, aggregated at the end
-    # of the config rather than per-example, per compute_fve's docstring.
-    actual_acts = []
-    nla_recon_acts = []
-    para_recon_acts = []
+    if verbose:
+        print(f"\n{'=' * 70}")
+        print(f"CONFIG: task={task_name!r}  n_shots={n_shots}  n={n}")
+        print(f"{'=' * 70}")
 
-    for qi in query_idxs:
+    for i, qi in enumerate(query_idxs):
         prompt, gold = build_icl_prompt(pairs, qi, n_shots, rng)
-        _, h_orig = run_with_patch(prompt, patch_vec=None, max_new_tokens=MAX_NEW_TOKENS)
-        explanation = av(h_orig)
 
+        # patch_vec=None -> no patching at all, so text_baseline is plain
+        # Gemma few-shot ICL with no NLA/function-vector involvement.
+        # h_orig is only captured here as a side effect (needed below for
+        # the round-trip conditions); the baseline condition doesn't use it.
+        text_baseline, h_orig = run_with_patch(prompt, patch_vec=None, max_new_tokens=MAX_NEW_TOKENS)
+        pred_baseline = extract_word_answer(text_baseline)
+        correct_baseline = is_correct(pred_baseline, gold, case_sensitive)
         if verbose:
-            print(f"--- gold={gold!r} ---")
-            print("explanation:", explanation[:300])
+            print(f"\n--- sample {i + 1}/{n}  |  gold={gold!r} ---")
+            print(f"  [baseline]  pred={pred_baseline!r:<15} correct={correct_baseline}")
+        baseline_correct += correct_baseline
+
+        explanation = av(h_orig)
+        if verbose:
+            print(f"  explanation : {explanation[:300]}")
 
         # NLA round-trip
         h_hat = ar(explanation)
@@ -987,47 +1005,79 @@ def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Rand
         pred = extract_word_answer(text_nla)
         correct = is_correct(pred, gold, case_sensitive)
         if verbose:
-            print("[nla]  pred:", pred, "| correct:", correct)
+            print(f"  [nla]       pred={pred!r:<15} correct={correct}")
         nla_correct += correct
 
-        actual_acts.append(h_orig)
-        nla_recon_acts.append(h_hat)
-
-        # Paraphrase round-trip
-        paraphrased = paraphrase(explanation)
+        # Paraphrase round-trip (medium)
+        paraphrased_medium = paraphrase(explanation, prompt_template=PARAPHRASE_PROMPT_MEDIUM)
         orig_words = set(explanation.lower().split())
-        para_words = set(paraphrased.lower().split())
-        overlap = len(orig_words & para_words) / len(orig_words) if orig_words else 0.0
-        para_overlaps.append(overlap)
-        if not is_meaningfully_paraphrased(explanation, paraphrased):
-            para_low_overlap_count += 1
+        para_medium_words = set(paraphrased_medium.lower().split())
+        overlap_medium = len(orig_words & para_medium_words) / len(orig_words) if orig_words else 0.0
+        para_medium_overlaps.append(overlap_medium)
+        if not is_meaningfully_paraphrased(explanation, paraphrased_medium):
+            para_medium_low_overlap_count += 1
             if verbose:
-                print(f"[para] WARNING: low reword rate (overlap={overlap:.2f})")
+                print(f"  [para-medium] WARNING: low reword rate (overlap={overlap_medium:.2f})")
 
-        h_hat_para = ar(paraphrased)
-        text_para, _ = run_with_patch(prompt, patch_vec=h_hat_para, max_new_tokens=MAX_NEW_TOKENS)
-        pred_para = extract_word_answer(text_para)
-        correct_para = is_correct(pred_para, gold, case_sensitive)
+        h_hat_para_medium = ar(paraphrased_medium)
+        text_para_medium, _ = run_with_patch(prompt, patch_vec=h_hat_para_medium, max_new_tokens=MAX_NEW_TOKENS)
+        pred_para_medium = extract_word_answer(text_para_medium)
+        correct_para_medium = is_correct(pred_para_medium, gold, case_sensitive)
         if verbose:
-            print("[para] paraphrased:", paraphrased[:300])
-            print("[para] pred:", pred_para, "| correct:", correct_para)
-        para_correct += correct_para
+            print(f"  [para-medium] text : {paraphrased_medium[:300]}")
+            print(f"  [para-medium]      pred={pred_para_medium!r:<15} correct={correct_para_medium}")
+        para_medium_correct += correct_para_medium
 
-        para_recon_acts.append(h_hat_para)
+        # Paraphrase round-trip (heavy)
+        paraphrased_heavy = paraphrase(explanation, prompt_template=PARAPHRASE_PROMPT_HEAVY)
+        para_heavy_words = set(paraphrased_heavy.lower().split())
+        overlap_heavy = len(orig_words & para_heavy_words) / len(orig_words) if orig_words else 0.0
+        para_heavy_overlaps.append(overlap_heavy)
+        if not is_meaningfully_paraphrased(explanation, paraphrased_heavy):
+            para_heavy_low_overlap_count += 1
+            if verbose:
+                print(f"  [para-heavy] WARNING: low reword rate (overlap={overlap_heavy:.2f})")
+
+        h_hat_para_heavy = ar(paraphrased_heavy)
+        text_para_heavy, _ = run_with_patch(prompt, patch_vec=h_hat_para_heavy, max_new_tokens=MAX_NEW_TOKENS)
+        pred_para_heavy = extract_word_answer(text_para_heavy)
+        correct_para_heavy = is_correct(pred_para_heavy, gold, case_sensitive)
+        if verbose:
+            print(f"  [para-heavy] text : {paraphrased_heavy[:300]}")
+            print(f"  [para-heavy]      pred={pred_para_heavy!r:<15} correct={correct_para_heavy}")
+        para_heavy_correct += correct_para_heavy
+
+    if verbose:
+        print(f"\n{'-' * 70}")
+        print(f"SUMMARY  task={task_name!r}  n_shots={n_shots}")
+        print(f"  acc_baseline (no NLA)       = {baseline_correct / n:.3f}")
+        print(f"  acc_nla (round-trip)        = {nla_correct / n:.3f}")
+        print(f"  acc_para_medium (paraphrase)= {para_medium_correct / n:.3f}")
+        print(f"  acc_para_heavy (paraphrase) = {para_heavy_correct / n:.3f}")
+        print(f"  avg_para_medium_overlap     = {sum(para_medium_overlaps) / n:.3f}")
+        print(f"  avg_para_heavy_overlap      = {sum(para_heavy_overlaps) / n:.3f}")
+        print(f"  para_medium_low_overlap_count = {para_medium_low_overlap_count}")
+        print(f"  para_heavy_low_overlap_count  = {para_heavy_low_overlap_count}")
+        print(f"{'-' * 70}\n")
 
     return {
         "n_shots": n_shots,
         "n": n,
+        "acc_baseline": baseline_correct / n,
         "acc_nla": nla_correct / n,
-        "acc_para": para_correct / n,
-        "fve_nla": compute_fve(actual_acts, nla_recon_acts),
-        "fve_para": compute_fve(actual_acts, para_recon_acts),
-        # just to make sure
-        "avg_para_overlap": sum(para_overlaps) / n,
-        "para_low_overlap_count": para_low_overlap_count,
+        "acc_para_medium": para_medium_correct / n,
+        "acc_para_heavy": para_heavy_correct / n,
+        "avg_para_medium_overlap": sum(para_medium_overlaps) / n,
+        "avg_para_heavy_overlap": sum(para_heavy_overlaps) / n,
+        "para_medium_low_overlap_count": para_medium_low_overlap_count,
+        "para_heavy_low_overlap_count": para_heavy_low_overlap_count,
     }
 
+# %% [markdown]
+# - might have to loosen to check if word is there or not instead of expecting exact output
+# - The av/ar round-trip through natural language seems to preserve the subject matter far more reliably than it preserves what specifically to do with that subject — the fine-grained target word, or the task's input→output mapping. That's a meaningful and fairly interpretable finding for whatever you're writing up, distinct from just "accuracy is low."
 
+# %%
 # %%
 # --------------------------------------------------------------------------
 # Sweep + plotting
@@ -1049,6 +1099,16 @@ from datetime import datetime
 # --------------------------------------------------------------------------
 
 import pandas as pd
+
+# Condition -> (column name, marker, label) used by both plotting loops
+# below. Single source of truth so per-task and combined-grid plots can't
+# drift out of sync with each other.
+CONDITIONS = [
+    ("acc_baseline", "o", "Baseline (no NLA)"),
+    ("acc_nla", "^", "NLA round-trip"),
+    ("acc_para_medium", "s", "Paraphrase round-trip (medium)"),
+    ("acc_para_heavy", "d", "Paraphrase round-trip (heavy)"),
+]
 
 
 def run_sweep(run_id: str | None = None) -> dict[str, pd.DataFrame]:
@@ -1104,8 +1164,11 @@ def plot_sweep(results: dict[str, pd.DataFrame], run_id: str):
 
     for task_name, df in results.items():
         fig, ax = plt.subplots(figsize=(5, 4))
-        ax.plot(df["n_shots"], df["acc_nla"], marker="o", label="NLA round-trip")
-        ax.plot(df["n_shots"], df["acc_para"], marker="s", label="Paraphrase round-trip")
+        for col, marker, label in CONDITIONS:
+            if col not in df.columns:
+                print(f"[warn] {task_name}: missing column {col!r}, skipping that line")
+                continue
+            ax.plot(df["n_shots"], df[col], marker=marker, label=label)
         ax.set_xlabel("Number of shots")
         ax.set_ylabel("Accuracy")
         ax.set_ylim(0, 1)
@@ -1123,8 +1186,10 @@ def plot_sweep(results: dict[str, pd.DataFrame], run_id: str):
             ax.axis("off")
             continue
         df = results[task_name]
-        ax.plot(df["n_shots"], df["acc_nla"], marker="o", label="NLA round-trip")
-        ax.plot(df["n_shots"], df["acc_para"], marker="s", label="Paraphrase round-trip")
+        for col, marker, label in CONDITIONS:
+            if col not in df.columns:
+                continue
+            ax.plot(df["n_shots"], df[col], marker=marker, label=label)
         ax.set_title(task_name)
         ax.set_xlabel("Number of shots")
         ax.set_ylabel("Accuracy")
@@ -1141,16 +1206,6 @@ def plot_sweep(results: dict[str, pd.DataFrame], run_id: str):
 results, run_id = run_sweep()
 plot_sweep(results, run_id)
 print(f"This run's ID: {run_id}")
-
-# If a run gets interrupted partway, skip run_sweep() entirely next time
-# and instead do:
-#   results = load_sweep_results()
-#   plot_sweep(results)
-# to replot everything that made it to disk.
-
-# %% [markdown]
-# - might have to loosen to check if word is there or not instead of expecting exact output
-# - The av/ar round-trip through natural language seems to preserve the subject matter far more reliably than it preserves what specifically to do with that subject — the fine-grained target word, or the task's input→output mapping. That's a meaningful and fairly interpretable finding for whatever you're writing up, distinct from just "accuracy is low."
 
 # %% [markdown]
 # ## Cleanup
