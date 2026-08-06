@@ -732,7 +732,7 @@ TASKS = [
 ]
 
 # Shot counts to sweep. (Zero-shot removed -- sweep starts at 2.)
-SHOT_COUNTS = [2, 4, 6, 8, 10]
+SHOT_COUNTS = [1, 2, 4, 6, 8, 10]
 N_PER_CONFIG = 50
 MAX_NEW_TOKENS = 256
 SEED = 0
@@ -961,19 +961,25 @@ def is_meaningfully_paraphrased(original: str, paraphrased: str, max_overlap: fl
 # One (task, n_shots) configuration
 # --------------------------------------------------------------------------
 
-def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Random, verbose=False) -> dict:
+def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Random,
+                all_pairs: dict[str, list[dict]], verbose=False) -> dict:
     n = min(N_PER_CONFIG, len(pairs))
     query_idxs = rng.sample(range(len(pairs)), n)
     case_sensitive = task_name in CASE_SENSITIVE_TASKS
 
     baseline_correct = 0
     nla_correct = 0
+    random_vec_correct = 0
+    mismatch_correct = 0
     para_medium_correct = 0
     para_heavy_correct = 0
     para_medium_overlaps = []
     para_heavy_overlaps = []
     para_medium_low_overlap_count = 0
     para_heavy_low_overlap_count = 0
+
+    # Tasks to draw a mismatched (real, wrong-task) activation vector from.
+    other_tasks = [t for t in all_pairs if t != task_name and len(all_pairs[t]) > 0]
 
     if verbose:
         print(f"\n{'=' * 70}")
@@ -983,10 +989,6 @@ def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Rand
     for i, qi in enumerate(query_idxs):
         prompt, gold = build_icl_prompt(pairs, qi, n_shots, rng)
 
-        # patch_vec=None -> no patching at all, so text_baseline is plain
-        # Gemma few-shot ICL with no NLA/function-vector involvement.
-        # h_orig is only captured here as a side effect (needed below for
-        # the round-trip conditions); the baseline condition doesn't use it.
         text_baseline, h_orig = run_with_patch(prompt, patch_vec=None, max_new_tokens=MAX_NEW_TOKENS)
         pred_baseline = extract_word_answer(text_baseline)
         correct_baseline = is_correct(pred_baseline, gold, case_sensitive)
@@ -1007,6 +1009,39 @@ def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Rand
         if verbose:
             print(f"  [nla]       pred={pred!r:<15} correct={correct}")
         nla_correct += correct
+
+        # Random activation vector -- null baseline, same norm as h_orig
+        # so scale isn't confounded with "content of the vector was garbage".
+        seed_i = rng.getrandbits(32)
+        gen = torch.Generator(device=h_orig.device).manual_seed(seed_i)
+        noise = torch.randn(h_orig.shape, generator=gen, device=h_orig.device, dtype=h_orig.dtype)
+        h_random = noise * (h_orig.norm() / (noise.norm() + 1e-8))
+        text_random, _ = run_with_patch(prompt, patch_vec=h_random, max_new_tokens=MAX_NEW_TOKENS)
+        pred_random = extract_word_answer(text_random)
+        correct_random = is_correct(pred_random, gold, case_sensitive)
+        if verbose:
+            print(f"  [random]    pred={pred_random!r:<15} correct={correct_random}  "
+                  f"(||h_orig||={h_orig.norm():.3f}, ||h_random||={h_random.norm():.3f})")
+        random_vec_correct += correct_random
+
+        # NEW: mismatched activation vector -- a real (not NLA-reconstructed,
+        # not random) activation, captured from a DIFFERENT task's ICL prompt,
+        # patched directly into the current prompt. Tests content-specificity
+        # rather than off-manifold sensitivity (that's what acc_random_vec is for).
+        foreign_task = rng.choice(other_tasks)
+        foreign_pairs = all_pairs[foreign_task]
+        foreign_qi = rng.randrange(len(foreign_pairs))
+        foreign_prompt, _ = build_icl_prompt(foreign_pairs, foreign_qi, n_shots, rng)
+        _, h_mismatch = run_with_patch(foreign_prompt, patch_vec=None, max_new_tokens=MAX_NEW_TOKENS)
+        # discard the generated text above -- only the captured activation matters
+
+        text_mismatch, _ = run_with_patch(prompt, patch_vec=h_mismatch, max_new_tokens=MAX_NEW_TOKENS)
+        pred_mismatch = extract_word_answer(text_mismatch)
+        correct_mismatch = is_correct(pred_mismatch, gold, case_sensitive)
+        if verbose:
+            print(f"  [mismatch]  pred={pred_mismatch!r:<15} correct={correct_mismatch}  "
+                  f"(from task={foreign_task!r})")
+        mismatch_correct += correct_mismatch
 
         # Paraphrase round-trip (medium)
         paraphrased_medium = paraphrase(explanation, prompt_template=PARAPHRASE_PROMPT_MEDIUM)
@@ -1052,6 +1087,8 @@ def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Rand
         print(f"SUMMARY  task={task_name!r}  n_shots={n_shots}")
         print(f"  acc_baseline (no NLA)       = {baseline_correct / n:.3f}")
         print(f"  acc_nla (round-trip)        = {nla_correct / n:.3f}")
+        print(f"  acc_random_vec              = {random_vec_correct / n:.3f}")
+        print(f"  acc_mismatch (foreign task) = {mismatch_correct / n:.3f}")
         print(f"  acc_para_medium (paraphrase)= {para_medium_correct / n:.3f}")
         print(f"  acc_para_heavy (paraphrase) = {para_heavy_correct / n:.3f}")
         print(f"  avg_para_medium_overlap     = {sum(para_medium_overlaps) / n:.3f}")
@@ -1060,13 +1097,25 @@ def run_config(task_name: str, n_shots: int, pairs: list[dict], rng: random.Rand
         print(f"  para_heavy_low_overlap_count  = {para_heavy_low_overlap_count}")
         print(f"{'-' * 70}\n")
 
+    def se(k):
+        p = k / n
+        return (p * (1 - p) / n) ** 0.5
+
     return {
         "n_shots": n_shots,
         "n": n,
         "acc_baseline": baseline_correct / n,
+        "se_baseline": se(baseline_correct),
         "acc_nla": nla_correct / n,
+        "se_nla": se(nla_correct),
+        "acc_random_vec": random_vec_correct / n,
+        "se_random_vec": se(random_vec_correct),
+        "acc_mismatch": mismatch_correct / n,
+        "se_mismatch": se(mismatch_correct),
         "acc_para_medium": para_medium_correct / n,
+        "se_para_medium": se(para_medium_correct),
         "acc_para_heavy": para_heavy_correct / n,
+        "se_para_heavy": se(para_heavy_correct),
         "avg_para_medium_overlap": sum(para_medium_overlaps) / n,
         "avg_para_heavy_overlap": sum(para_heavy_overlaps) / n,
         "para_medium_low_overlap_count": para_medium_low_overlap_count,
@@ -1106,8 +1155,10 @@ import pandas as pd
 CONDITIONS = [
     ("acc_baseline", "o", "Baseline (no NLA)"),
     ("acc_nla", "^", "NLA round-trip"),
+    ("acc_random_vec", "x", "Random activation vector"),
     ("acc_para_medium", "s", "Paraphrase round-trip (medium)"),
     ("acc_para_heavy", "d", "Paraphrase round-trip (heavy)"),
+    ("acc_mismatch", "p", "Mismatched vector (foreign task)")
 ]
 
 
@@ -1119,11 +1170,20 @@ def run_sweep(run_id: str | None = None) -> dict[str, pd.DataFrame]:
     results: dict[str, pd.DataFrame] = {}
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    # NEW: load every task's pairs upfront so run_config can sample a
+    # foreign-task query for the mismatched-vector condition.
+    all_pairs: dict[str, list[dict]] = {}
     for task_name in TASKS:
         try:
-            pairs = load_fv_task(task_name)
+            all_pairs[task_name] = load_fv_task(task_name)
+        except Exception as e:
+            print(f"[warn] could not preload {task_name!r} for cross-task sampling: {e!r}")
+
+    for task_name in TASKS:
+        try:
+            pairs = all_pairs[task_name]
             rows = [
-                run_config(task_name, k, pairs, rng, verbose=True)
+                run_config(task_name, k, pairs, rng, all_pairs, verbose=True)
                 for k in tqdm(SHOT_COUNTS, desc=task_name, unit="shot-count")
             ]
         except Exception as e:
@@ -1168,7 +1228,10 @@ def plot_sweep(results: dict[str, pd.DataFrame], run_id: str):
             if col not in df.columns:
                 print(f"[warn] {task_name}: missing column {col!r}, skipping that line")
                 continue
-            ax.plot(df["n_shots"], df[col], marker=marker, label=label)
+            se_col = col.replace("acc_", "se_", 1)
+            yerr = df[se_col] if se_col in df.columns else None
+            ax.errorbar(df["n_shots"], df[col], yerr=yerr, marker=marker, label=label,
+                        capsize=3, elinewidth=1, markeredgewidth=1)
         ax.set_xlabel("Number of shots")
         ax.set_ylabel("Accuracy")
         ax.set_ylim(0, 1)
@@ -1189,7 +1252,10 @@ def plot_sweep(results: dict[str, pd.DataFrame], run_id: str):
         for col, marker, label in CONDITIONS:
             if col not in df.columns:
                 continue
-            ax.plot(df["n_shots"], df[col], marker=marker, label=label)
+            se_col = col.replace("acc_", "se_", 1)
+            yerr = df[se_col] if se_col in df.columns else None
+            ax.errorbar(df["n_shots"], df[col], yerr=yerr, marker=marker, label=label,
+                        capsize=3, elinewidth=1, markeredgewidth=1)
         ax.set_title(task_name)
         ax.set_xlabel("Number of shots")
         ax.set_ylabel("Accuracy")

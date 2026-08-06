@@ -49,7 +49,7 @@
   },
   {
     "input": "teach",
-    "output": "teached"
+    "output": "taught"
   },
   {
     "input": "fight",
@@ -381,7 +381,7 @@
   },
   {
     "input": "build",
-    "output": "builded"
+    "output": "built"
   },
   {
     "input": "send",
@@ -613,7 +613,7 @@
   },
   {
     "input": "cry",
-    "output": "cryed"
+    "output": "cried"
   },
   {
     "input": "shout",
@@ -669,7 +669,7 @@
   },
   {
     "input": "carry",
-    "output": "carryed"
+    "output": "carried"
   },
   {
     "input": "lift",
@@ -677,7 +677,7 @@
   },
   {
     "input": "drop",
-    "output": "droped"
+    "output": "dropped"
   },
   {
     "input": "kick",
@@ -725,7 +725,7 @@
   },
   {
     "input": "dry",
-    "output": "dryed"
+    "output": "dried"
   },
   {
     "input": "fold",
@@ -745,7 +745,7 @@
   },
   {
     "input": "fry",
-    "output": "fryed"
+    "output": "fried"
   },
   {
     "input": "grill",
@@ -793,7 +793,7 @@
   },
   {
     "input": "study",
-    "output": "studyed"
+    "output": "studied"
   },
   {
     "input": "train",
@@ -813,7 +813,7 @@
   },
   {
     "input": "jog",
-    "output": "joged"
+    "output": "jogged"
   },
   {
     "input": "skate",
